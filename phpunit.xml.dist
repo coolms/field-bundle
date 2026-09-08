@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    Standalone suite for coolms/field.
+    Standalone suite for coolms/field-bundle.
 
-    The consuming application points its own `core` testsuite at this
-    same `tests/` directory, so one set of files runs from both places and
-    the two cannot disagree about what passes.
+    The consuming application points its own `field-bundle` testsuite at
+    this same `tests/` directory, so one set of files runs from both places
+    and the two cannot disagree about what passes.
 -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
