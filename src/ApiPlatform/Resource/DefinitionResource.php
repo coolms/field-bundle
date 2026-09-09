@@ -11,7 +11,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
-use CoolMS\CoreApp\ApiPlatform\Input\ReorderInput;
+use CoolMS\Core\Application\ApiPlatform\Input\ReorderInput;
 use CoolMS\Field\Entity\Definition;
 
 #[ApiResource(

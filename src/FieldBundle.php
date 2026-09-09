@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CoolMS\Field\Bundle;
 
-use CoolMS\CoreBundle\AbstractCoolmsBundle;
+use CoolMS\Core\Bundle\AbstractCoolmsBundle;
 use CoolMS\Field\Bundle\DependencyInjection\Compiler\FieldMetadataRegistryPass;
 use CoolMS\Field\Bundle\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

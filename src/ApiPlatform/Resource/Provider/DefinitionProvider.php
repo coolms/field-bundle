@@ -10,7 +10,7 @@ use ApiPlatform\State\ProviderInterface;
 use CoolMS\Field\Bundle\ApiPlatform\Resource\DefinitionResource;
 use CoolMS\Core\Translation\InlineLabelCatalogueReaderInterface;
 use CoolMS\Core\Translation\LabelResolverInterface;
-use CoolMS\CoreBundle\ApiPlatform\UriVariableUuidExtractorTrait;
+use CoolMS\Core\Bundle\ApiPlatform\UriVariableUuidExtractorTrait;
 use CoolMS\Field\Entity\Definition;
 use CoolMS\Field\Repository\DefinitionRepositoryInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

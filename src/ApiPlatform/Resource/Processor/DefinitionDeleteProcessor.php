@@ -7,7 +7,7 @@ namespace CoolMS\Field\Bundle\ApiPlatform\Resource\Processor;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
 use CoolMS\Field\Bundle\ApiPlatform\Resource\DefinitionResource;
-use CoolMS\CoreBundle\ApiPlatform\UriVariableUuidExtractorTrait;
+use CoolMS\Core\Bundle\ApiPlatform\UriVariableUuidExtractorTrait;
 use CoolMS\Field\Entity\Definition;
 use CoolMS\Field\Repository\DefinitionRepositoryInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
