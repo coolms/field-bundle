@@ -9,7 +9,32 @@ major number means here.
 Every entry in this file was written in the same commit as the change it
 describes. Nothing here is reconstructed.
 
-## Unreleased
+## 2.0.0-alpha1 - 2026-09-10
+
+**A pre-release. It carries no compatibility promise**, which is the honest
+statement of where the platform is: the shape is still moving, and a stable tag
+would be a promise that cannot be kept yet.
+
+Composer will not install it under default stability. Set
+
+```json
+"minimum-stability": "alpha",
+"prefer-stable": true
+```
+
+in your root `composer.json`, then:
+
+```
+composer require coolms/field-bundle:^2.0
+```
+
+`prefer-stable` keeps every other dependency of yours on its newest stable
+release, so this loosening applies to what actually needs it and nothing else.
+
+!! **A per-package stability flag is not enough.** `composer require
+coolms/field-bundle:^2.0@alpha` admits the alpha of the package it names and **nothing
+behind it**, so the siblings it pulls in still fail to resolve -- and composer
+reports that against the sibling rather than against what you asked for.
 
 ### Added
 
