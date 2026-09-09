@@ -25,12 +25,17 @@
         "coolms/entity-bundle": "^2.0",
         "coolms/field": "^2.0",
         "coolms/field-doctrine": "^2.0",
+        "psr/log": "^3.0",
         "symfony/config": "^8.0",
         "symfony/console": "^8.0",
         "symfony/dependency-injection": "^8.0",
         "symfony/form": "^8.0",
+        "symfony/http-foundation": "^8.0",
         "symfony/http-kernel": "^8.0",
-        "symfony/validator": "^8.0"
+        "symfony/security-bundle": "^8.0",
+        "symfony/serializer": "^8.0",
+        "symfony/validator": "^8.0",
+        "symfony/yaml": "^8.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^12.5"
