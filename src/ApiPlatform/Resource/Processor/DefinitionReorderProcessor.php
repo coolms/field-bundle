@@ -6,7 +6,7 @@ namespace CoolMS\FieldBundle\ApiPlatform\Resource\Processor;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use CoolMS\CoreModule\ApiPlatform\Input\ReorderInput;
+use CoolMS\CoreApp\ApiPlatform\Input\ReorderInput;
 use CoolMS\Field\Repository\DefinitionRepositoryInterface;
 
 /** @implements ProcessorInterface<ReorderInput, void> */

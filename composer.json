@@ -20,7 +20,7 @@
         "api-platform/core": "^4.1",
         "coolms/core": "^2.0",
         "coolms/core-bundle": "^2.0",
-        "coolms/core-module": "^2.0",
+        "coolms/core-app": "^2.0",
         "coolms/entity": "^2.0",
         "coolms/entity-bundle": "^2.0",
         "coolms/field": "^2.0",
