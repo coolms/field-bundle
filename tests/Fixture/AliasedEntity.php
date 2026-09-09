@@ -14,8 +14,9 @@ namespace CoolMS\FieldBundle\Tests\Fixture;
  * -- so what is being exercised is the ALIAS, and the class exists only to be
  * the other end of the mapping.
  *
- * It used to be `App\VFS\Domain\Entity\Node`, which made the test unable to
- * leave the application for a coupling it did not actually have.
+ * It used to be an entity class belonging to the application, which is the
+ * only thing that kept the test from travelling with the code it tests --
+ * a coupling the test did not actually have.
  */
 final class AliasedEntity
 {

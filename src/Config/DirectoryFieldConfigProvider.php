@@ -102,7 +102,7 @@ final class DirectoryFieldConfigProvider implements FieldConfigProviderInterface
     /**
      * Converts an alias to a filesystem-safe directory name.
      *
-     * Slug aliases are returned as-is. FQCN aliases (e.g. App\Content\Domain\Entity\PageVariant)
+     * Slug aliases are returned as-is. FQCN aliases (e.g. Vendor\Blog\Entity\PageVariant)
      * are converted to snake_case short names (e.g. page_variant) so that the directory
      * comparison matches the paths written by FileFieldOverrideStorage.
      */
@@ -111,7 +111,7 @@ final class DirectoryFieldConfigProvider implements FieldConfigProviderInterface
         if (!str_contains($alias, '\\')) {
             return $alias; // already a safe slug
         }
-        // App\Content\Domain\Entity\PageVariant -> 'PageVariant' -> 'page_variant'
+        // Vendor\Blog\Entity\PageVariant -> 'PageVariant' -> 'page_variant'
         $shortName = substr($alias, strrpos($alias, '\\') + 1);
 
         return (string) preg_replace('/(?<!^)[A-Z]/', '_$0', $shortName)

@@ -21,10 +21,10 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
  * writer's own decisions for BOTH coordinates:
  *  - {@see FieldTranslationWriter::writeOptionLabels()} -- the
  *    `optionValue => locale => text` -> `childId => field => locale => value`
- *    reshape under the `option` childKind (F5.b Phase 5).
+ *    reshape under the `option` childKind.
  *  - {@see FieldTranslationWriter::writeLabel()} -- the field's own `label`,
  *    wrapped `locale => text` -> `field('label') => locale => text` and sent
- *    via the entity-level `write()` (#706).
+ *    via the entity-level `write()`.
  * Plus the shared no-op guards (null/empty payload) and the actor guard.
  *
  * The catalogue writer is a spy (not a mock) so the reshaped payload is

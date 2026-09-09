@@ -13,13 +13,13 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
- * F5.b Phase 5 -- the FieldDefinition API provider localizes the display
+ * The FieldDefinition API provider localizes the display
  * `label` (stored in options['label']) through LabelResolver. The
  * `toResource()` projection is the read seam; these tests pin that it
  * delegates to the resolver for `label` while leaving sibling fields
  * (name, type, selectOptions) verbatim.
  *
- * Per-option (selectOptions) labels ARE localized too (F5.b Phase 5):
+ * Per-option (selectOptions) labels ARE localized too:
  * options are inline {value,label} arrays keyed by their stable `value`
  * via the LabelResolver inline-child seam (resolveChild). Pinned by
  * `localizesEachSelectOptionLabelViaResolveChild`.
