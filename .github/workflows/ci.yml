@@ -88,8 +88,9 @@ jobs:
           php -r '
             $d = json_decode(file_get_contents("composer.json"), true);
             $known = ["coolms/core", "coolms/core-application",
-                      "coolms/core-bundle", "coolms/entity",
-                      "coolms/entity-bundle", "coolms/field",
+                      "coolms/core-bundle", "coolms/core-doctrine",
+                      "coolms/entity", "coolms/entity-bundle",
+                      "coolms/entity-doctrine", "coolms/field",
                       "coolms/field-doctrine"];
             $seen = array_merge(array_keys($d["require"] ?? []),
                                 array_keys($d["require-dev"] ?? []));
@@ -108,8 +109,10 @@ jobs:
           WITH='--with coolms/core:2.0.x-dev'
           WITH="$WITH --with coolms/core-application:2.0.x-dev"
           WITH="$WITH --with coolms/core-bundle:2.0.x-dev"
+          WITH="$WITH --with coolms/core-doctrine:2.0.x-dev"
           WITH="$WITH --with coolms/entity:2.0.x-dev"
           WITH="$WITH --with coolms/entity-bundle:2.0.x-dev"
+          WITH="$WITH --with coolms/entity-doctrine:2.0.x-dev"
           WITH="$WITH --with coolms/field:2.0.x-dev"
           WITH="$WITH --with coolms/field-doctrine:2.0.x-dev"
           if [ "${{ matrix.deps }}" = 'lowest' ]; then
