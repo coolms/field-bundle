@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle\ApiPlatform\Resource;
+namespace CoolMS\Field\Bundle\ApiPlatform\Resource;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;

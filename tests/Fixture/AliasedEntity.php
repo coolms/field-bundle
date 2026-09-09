@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle\Tests\Fixture;
+namespace CoolMS\Field\Bundle\Tests\Fixture;
 
 /**
  * A class name to hang an entity alias on.
  *
- * {@see \CoolMS\FieldBundle\Tests\CacheWarmer\FieldDefinitionSyncWarmerTest}
+ * {@see \CoolMS\Field\Bundle\Tests\CacheWarmer\FieldDefinitionSyncWarmerTest}
  * builds an `EntityAliasRegistry` so the warmer can turn the alias written in
  * a YAML field file into a class. The warmer never reflects on the class --
  * the field-names resolver and the entity factory are both stubs in that test

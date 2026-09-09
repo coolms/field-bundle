@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle\ApiPlatform\Resource\Provider;
+namespace CoolMS\Field\Bundle\ApiPlatform\Resource\Provider;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
-use CoolMS\FieldBundle\ApiPlatform\Resource\FormTypeOptionResource;
+use CoolMS\Field\Bundle\ApiPlatform\Resource\FormTypeOptionResource;
 use CoolMS\Field\Registry\FormTypeRegistry;
 
 /** @implements ProviderInterface<FormTypeOptionResource> */

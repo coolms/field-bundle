@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle\Tests\Reflection;
+namespace CoolMS\Field\Bundle\Tests\Reflection;
 
 use CoolMS\Core\Attribute\FieldMeta;
-use CoolMS\FieldBundle\Reflection\FieldMetaReader;
+use CoolMS\Field\Bundle\Reflection\FieldMetaReader;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle\Validation;
+namespace CoolMS\Field\Bundle\Validation;
 
-use CoolMS\FieldBundle\ApiPlatform\Resource\ConstraintMetadataResource;
+use CoolMS\Field\Bundle\ApiPlatform\Resource\ConstraintMetadataResource;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
 /**

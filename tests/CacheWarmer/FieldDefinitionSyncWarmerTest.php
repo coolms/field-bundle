@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle\Tests\CacheWarmer;
+namespace CoolMS\Field\Bundle\Tests\CacheWarmer;
 
 use CoolMS\Core\Service\DataFormat;
 use CoolMS\Entity\Factory\EntityFactoryFactoryInterface;
@@ -11,9 +11,9 @@ use CoolMS\Entity\Registry\EntityAliasRegistry;
 use CoolMS\Field\Doctrine\EntityFieldNamesResolverInterface;
 use CoolMS\Field\Entity\Definition;
 use CoolMS\Field\Repository\DefinitionRepositoryInterface;
-use CoolMS\FieldBundle\CacheWarmer\FieldDefinitionSyncWarmer;
-use CoolMS\FieldBundle\Config\DirectoryFieldConfigProvider;
-use CoolMS\FieldBundle\Tests\Fixture\AliasedEntity;
+use CoolMS\Field\Bundle\CacheWarmer\FieldDefinitionSyncWarmer;
+use CoolMS\Field\Bundle\Config\DirectoryFieldConfigProvider;
+use CoolMS\Field\Bundle\Tests\Fixture\AliasedEntity;
 use FilesystemIterator;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

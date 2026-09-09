@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle\ApiPlatform\Resource\Processor;
+namespace CoolMS\Field\Bundle\ApiPlatform\Resource\Processor;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use CoolMS\FieldBundle\ApiPlatform\Resource\DefinitionResource;
+use CoolMS\Field\Bundle\ApiPlatform\Resource\DefinitionResource;
 use CoolMS\CoreBundle\ApiPlatform\UriVariableUuidExtractorTrait;
 use CoolMS\Field\Entity\Definition;
 use CoolMS\Field\Repository\DefinitionRepositoryInterface;

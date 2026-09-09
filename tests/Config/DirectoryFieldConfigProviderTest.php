@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle\Tests\Config;
+namespace CoolMS\Field\Bundle\Tests\Config;
 
 use CoolMS\Core\Config\PhpFileLoader;
 use CoolMS\Core\Config\XmlFileLoader;
 use CoolMS\Core\Config\YamlFileLoader;
-use CoolMS\FieldBundle\Config\DirectoryFieldConfigProvider;
+use CoolMS\Field\Bundle\Config\DirectoryFieldConfigProvider;
 use FilesystemIterator;
 use PHPUnit\Framework\TestCase;
 use RecursiveDirectoryIterator;

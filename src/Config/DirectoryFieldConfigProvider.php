@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle\Config;
+namespace CoolMS\Field\Bundle\Config;
 
 use CoolMS\Core\Config\FileFormatLoaderInterface;
 use CoolMS\Core\Field\FieldConfigProviderInterface;

@@ -42,12 +42,12 @@
     },
     "autoload": {
         "psr-4": {
-            "CoolMS\\FieldBundle\\": "src/"
+            "CoolMS\\Field\\Bundle\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "CoolMS\\FieldBundle\\Tests\\": "tests/"
+            "CoolMS\\Field\\Bundle\\Tests\\": "tests/"
         }
     },
     "scripts": {

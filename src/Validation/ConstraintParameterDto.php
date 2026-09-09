@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle\Validation;
+namespace CoolMS\Field\Bundle\Validation;
 
 /**
  * Describes a single constructor parameter of a Symfony Validator constraint.

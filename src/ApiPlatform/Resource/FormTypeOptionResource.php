@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle\ApiPlatform\Resource;
+namespace CoolMS\Field\Bundle\ApiPlatform\Resource;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
-use CoolMS\FieldBundle\ApiPlatform\Resource\Provider\FormTypeOptionCollectionProvider;
+use CoolMS\Field\Bundle\ApiPlatform\Resource\Provider\FormTypeOptionCollectionProvider;
 
 /**
  * Exposes available Symfony form type options for the Schema Editor.

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle\Translation;
+namespace CoolMS\Field\Bundle\Translation;
 
 use CoolMS\Core\Identity\UserInterface;
 use CoolMS\Core\Translation\InlineLabelCatalogueWriterInterface;

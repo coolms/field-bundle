@@ -2,24 +2,24 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle\DependencyInjection;
+namespace CoolMS\Field\Bundle\DependencyInjection;
 
-use CoolMS\FieldBundle\ApiPlatform\Resource\Processor\DefinitionCreateProcessor;
-use CoolMS\FieldBundle\ApiPlatform\Resource\Processor\DefinitionDeleteProcessor;
-use CoolMS\FieldBundle\ApiPlatform\Resource\Processor\DefinitionUpdateProcessor;
-use CoolMS\FieldBundle\ApiPlatform\Resource\Provider\DefinitionProvider;
-use CoolMS\FieldBundle\ApiPlatform\Resource\Provider\FormTypeOptionCollectionProvider;
-use CoolMS\FieldBundle\CacheWarmer\FieldDefinitionSyncWarmer;
-use CoolMS\FieldBundle\Command\CreateDefinitionCommand;
-use CoolMS\FieldBundle\Command\ListDefinitionsCommand;
-use CoolMS\FieldBundle\Config\DirectoryFieldConfigProvider;
-use CoolMS\FieldBundle\EntitySchema\FieldSchemaSource;
-use CoolMS\FieldBundle\Form\StaticFieldMetaLoader;
-use CoolMS\FieldBundle\FormType\BuiltinFormTypeProvider;
-use CoolMS\FieldBundle\Reflection\FieldMetaReader;
-use CoolMS\FieldBundle\Storage\DbFieldOverrideStorage;
-use CoolMS\FieldBundle\Storage\FieldOverrideStorageRouter;
-use CoolMS\FieldBundle\Storage\FileFieldOverrideStorage;
+use CoolMS\Field\Bundle\ApiPlatform\Resource\Processor\DefinitionCreateProcessor;
+use CoolMS\Field\Bundle\ApiPlatform\Resource\Processor\DefinitionDeleteProcessor;
+use CoolMS\Field\Bundle\ApiPlatform\Resource\Processor\DefinitionUpdateProcessor;
+use CoolMS\Field\Bundle\ApiPlatform\Resource\Provider\DefinitionProvider;
+use CoolMS\Field\Bundle\ApiPlatform\Resource\Provider\FormTypeOptionCollectionProvider;
+use CoolMS\Field\Bundle\CacheWarmer\FieldDefinitionSyncWarmer;
+use CoolMS\Field\Bundle\Command\CreateDefinitionCommand;
+use CoolMS\Field\Bundle\Command\ListDefinitionsCommand;
+use CoolMS\Field\Bundle\Config\DirectoryFieldConfigProvider;
+use CoolMS\Field\Bundle\EntitySchema\FieldSchemaSource;
+use CoolMS\Field\Bundle\Form\StaticFieldMetaLoader;
+use CoolMS\Field\Bundle\FormType\BuiltinFormTypeProvider;
+use CoolMS\Field\Bundle\Reflection\FieldMetaReader;
+use CoolMS\Field\Bundle\Storage\DbFieldOverrideStorage;
+use CoolMS\Field\Bundle\Storage\FieldOverrideStorageRouter;
+use CoolMS\Field\Bundle\Storage\FileFieldOverrideStorage;
 use CoolMS\Core\Field\FieldConfigProviderInterface;
 use CoolMS\Core\Field\FieldWidgetProviderInterface;
 use CoolMS\Core\Field\FormTypeProviderInterface;

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle\ApiPlatform\Resource;
+namespace CoolMS\Field\Bundle\ApiPlatform\Resource;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
-use CoolMS\FieldBundle\ApiPlatform\Resource\Provider\ConstraintMetadataCollectionProvider;
-use CoolMS\FieldBundle\Validation\ConstraintParameterDto;
+use CoolMS\Field\Bundle\ApiPlatform\Resource\Provider\ConstraintMetadataCollectionProvider;
+use CoolMS\Field\Bundle\Validation\ConstraintParameterDto;
 
 /**
  * Exposes registered Symfony Validator constraint metadata.

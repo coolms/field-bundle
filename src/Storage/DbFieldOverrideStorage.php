@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle\Storage;
+namespace CoolMS\Field\Bundle\Storage;
 
 use CoolMS\Entity\Factory\EntityFactoryFactoryInterface;
 use CoolMS\Field\Contract\FieldOverrideStorageInterface;

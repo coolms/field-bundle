@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle\ApiPlatform\Resource\Provider;
+namespace CoolMS\Field\Bundle\ApiPlatform\Resource\Provider;
 
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
-use CoolMS\FieldBundle\ApiPlatform\Resource\DefinitionResource;
+use CoolMS\Field\Bundle\ApiPlatform\Resource\DefinitionResource;
 use CoolMS\Core\Translation\InlineLabelCatalogueReaderInterface;
 use CoolMS\Core\Translation\LabelResolverInterface;
 use CoolMS\CoreBundle\ApiPlatform\UriVariableUuidExtractorTrait;

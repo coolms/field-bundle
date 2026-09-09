@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle\EntitySchema;
+namespace CoolMS\Field\Bundle\EntitySchema;
 
 use CoolMS\Entity\Contract\FieldMetadataSourceInterface;
 use CoolMS\Entity\Contract\FieldSchemaSourceInterface;

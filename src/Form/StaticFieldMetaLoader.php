@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle\Form;
+namespace CoolMS\Field\Bundle\Form;
 
 use CoolMS\Core\Field\StaticEntityAliasProviderInterface;
 use CoolMS\Core\Form\FormConfigLoaderInterface;

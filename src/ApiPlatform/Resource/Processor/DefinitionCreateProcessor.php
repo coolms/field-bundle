@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle\ApiPlatform\Resource\Processor;
+namespace CoolMS\Field\Bundle\ApiPlatform\Resource\Processor;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use CoolMS\FieldBundle\ApiPlatform\Resource\DefinitionResource;
-use CoolMS\FieldBundle\Translation\FieldTranslationWriter;
+use CoolMS\Field\Bundle\ApiPlatform\Resource\DefinitionResource;
+use CoolMS\Field\Bundle\Translation\FieldTranslationWriter;
 use CoolMS\Core\Field\ReservedFieldNameException;
 use CoolMS\Core\Field\ReservedFieldNames;
 use CoolMS\Entity\Factory\EntityFactoryFactoryInterface;

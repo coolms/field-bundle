@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle\Tests\Fixture;
+namespace CoolMS\Field\Bundle\Tests\Fixture;
 
 use CoolMS\Core\Identity\UserInterface as CoolmsUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface as SymfonyUserInterface;
@@ -13,7 +13,7 @@ use Symfony\Component\Uid\Uuid;
  *
  * Two interfaces, because two different pieces of code look at it:
  * `Security::getUser()` returns Symfony's contract, and
- * {@see \CoolMS\FieldBundle\Translation\FieldTranslationWriter::resolveActor()}
+ * {@see \CoolMS\Field\Bundle\Translation\FieldTranslationWriter::resolveActor()}
  * narrows that to the platform's own {@see CoolmsUserInterface} before it will
  * write anything. A fake implementing only one of the two passes the type
  * check it happens to satisfy and then silently takes the anonymous branch.

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle;
+namespace CoolMS\Field\Bundle;
 
 use CoolMS\CoreBundle\AbstractCoolmsBundle;
-use CoolMS\FieldBundle\DependencyInjection\Compiler\FieldMetadataRegistryPass;
-use CoolMS\FieldBundle\DependencyInjection\Extension;
+use CoolMS\Field\Bundle\DependencyInjection\Compiler\FieldMetadataRegistryPass;
+use CoolMS\Field\Bundle\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 final class FieldBundle extends AbstractCoolmsBundle

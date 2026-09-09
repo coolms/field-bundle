@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle\Reflection;
+namespace CoolMS\Field\Bundle\Reflection;
 
 use CoolMS\Core\Attribute\FieldMeta;
 use CoolMS\Field\Contract\FieldMetaReaderInterface;

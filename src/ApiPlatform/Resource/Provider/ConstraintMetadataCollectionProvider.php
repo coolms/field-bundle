@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle\ApiPlatform\Resource\Provider;
+namespace CoolMS\Field\Bundle\ApiPlatform\Resource\Provider;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
-use CoolMS\FieldBundle\ApiPlatform\Resource\ConstraintMetadataResource;
-use CoolMS\FieldBundle\Validation\ConstraintRegistry;
+use CoolMS\Field\Bundle\ApiPlatform\Resource\ConstraintMetadataResource;
+use CoolMS\Field\Bundle\Validation\ConstraintRegistry;
 
 /**
  * Provides the list of all registered constraint metadata for the Schema Editor.

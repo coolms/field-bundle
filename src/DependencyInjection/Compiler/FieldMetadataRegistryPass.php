@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle\DependencyInjection\Compiler;
+namespace CoolMS\Field\Bundle\DependencyInjection\Compiler;
 
 use CoolMS\Field\Service\FieldMetadataRegistry;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;

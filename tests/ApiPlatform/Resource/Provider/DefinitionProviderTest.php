@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle\Tests\ApiPlatform\Resource\Provider;
+namespace CoolMS\Field\Bundle\Tests\ApiPlatform\Resource\Provider;
 
 use CoolMS\Core\Translation\InlineLabelCatalogueReaderInterface;
 use CoolMS\Core\Translation\LabelResolverInterface;
 use CoolMS\Field\Entity\Definition;
 use CoolMS\Field\Repository\DefinitionRepositoryInterface;
-use CoolMS\FieldBundle\ApiPlatform\Resource\Provider\DefinitionProvider;
+use CoolMS\Field\Bundle\ApiPlatform\Resource\Provider\DefinitionProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 

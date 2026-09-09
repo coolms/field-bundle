@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle\FormType;
+namespace CoolMS\Field\Bundle\FormType;
 
 use CoolMS\Core\Field\FormTypeProviderInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;

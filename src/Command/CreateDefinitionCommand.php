@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle\Command;
+namespace CoolMS\Field\Bundle\Command;
 
 use CoolMS\Core\Field\ReservedFieldNameException;
 use CoolMS\Core\Field\ReservedFieldNames;

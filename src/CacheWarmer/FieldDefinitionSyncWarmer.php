@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle\CacheWarmer;
+namespace CoolMS\Field\Bundle\CacheWarmer;
 
-use CoolMS\FieldBundle\Config\DirectoryFieldConfigProvider;
+use CoolMS\Field\Bundle\Config\DirectoryFieldConfigProvider;
 use CoolMS\Entity\Factory\EntityFactoryFactoryInterface;
 use CoolMS\Entity\Registry\EntityAliasRegistry;
 use CoolMS\Field\Doctrine\EntityFieldNamesResolverInterface;

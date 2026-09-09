@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\FieldBundle\Tests\Form;
+namespace CoolMS\Field\Bundle\Tests\Form;
 
 use CoolMS\Core\Attribute\FieldMeta;
 use CoolMS\Core\Field\StaticEntityAliasProviderInterface;
 use CoolMS\Field\Repository\DefinitionRepositoryInterface;
 use CoolMS\Field\Service\FieldMetadataRegistry;
-use CoolMS\FieldBundle\Form\StaticFieldMetaLoader;
-use CoolMS\FieldBundle\Reflection\FieldMetaReader;
+use CoolMS\Field\Bundle\Form\StaticFieldMetaLoader;
+use CoolMS\Field\Bundle\Reflection\FieldMetaReader;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints as Assert;
 
