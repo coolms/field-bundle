@@ -50,9 +50,17 @@ final class FieldDefinitionSyncWarmer implements CacheWarmerInterface
     ) {
     }
 
+    /**
+     * Optional in Symfony's sense: this warmer needs the database, and a warm-up
+     * without one (`--no-optional-warmers`, an image build) must be able to skip
+     * it. Required, it ran at container compile and loaded entity metadata
+     * before DoctrineBundle's metadata warmer (priority 1000, optional), which
+     * then refused -- so the production warm-up never completed. As an optional
+     * warmer it runs after Doctrine's, in the same `cache:clear`.
+     */
     public function isOptional(): bool
     {
-        return false;
+        return true;
     }
 
     /**
