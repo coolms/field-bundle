@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace CoolMS\Field\Bundle\CacheWarmer;
 
-use CoolMS\Field\Bundle\Config\DirectoryFieldConfigProvider;
 use CoolMS\Entity\Factory\EntityFactoryFactoryInterface;
 use CoolMS\Entity\Registry\EntityAliasRegistry;
+use CoolMS\Field\Bundle\Config\DirectoryFieldConfigProvider;
 use CoolMS\Field\Doctrine\EntityFieldNamesResolverInterface;
 use CoolMS\Field\Entity\Definition;
 use CoolMS\Field\Entity\DefinitionInterface;

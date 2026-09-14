@@ -6,9 +6,9 @@ namespace CoolMS\Field\Bundle\Tests\Translation;
 
 use CoolMS\Core\Identity\UserInterface;
 use CoolMS\Core\Translation\InlineLabelCatalogueWriterInterface;
-use CoolMS\Field\Entity\Definition;
 use CoolMS\Field\Bundle\Tests\Fixture\FakeActor;
 use CoolMS\Field\Bundle\Translation\FieldTranslationWriter;
+use CoolMS\Field\Entity\Definition;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\SecurityBundle\Security;
