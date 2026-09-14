@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace CoolMS\Field\Bundle\Tests\EntitySchema;
 
 use CoolMS\Core\Attribute\FieldMeta;
+use CoolMS\Field\Bundle\EntitySchema\FieldSchemaSource;
+use CoolMS\Field\Bundle\Reflection\FieldMetaReader;
 use CoolMS\Field\Entity\Definition;
 use CoolMS\Field\Repository\DefinitionRepositoryInterface;
 use CoolMS\Field\Service\FieldMetadataRegistry;
-use CoolMS\Field\Bundle\EntitySchema\FieldSchemaSource;
-use CoolMS\Field\Bundle\Reflection\FieldMetaReader;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
