@@ -100,11 +100,23 @@ class Extension extends AbstractExtension implements PrependExtensionInterface
         $container->setAlias(DefinitionRepositoryInterface::class, DefinitionRepository::class)
             ->setPublic(true);
 
-        // ApiPlatform
-        $container->autowire(DefinitionProvider::class)->setPublic(true);
-        $container->autowire(DefinitionCreateProcessor::class)->setPublic(true);
-        $container->autowire(DefinitionUpdateProcessor::class)->setPublic(true);
-        $container->autowire(DefinitionDeleteProcessor::class)->setPublic(true);
+        // ApiPlatform. AUTOCONFIGURED, or API Platform never sees them: a
+        // provider is found through the `api_platform.state_provider` tag, which
+        // autoconfiguration attaches to autoconfigured definitions only. In the
+        // host application these four were tagged anyway, by its own prototype
+        // scan of this package -- a clean consumer has no such scan, and
+        // coolms/taxonomy-bundle, registered the same way without the scan,
+        // answered 404 on every request (measured 2026-09-14).
+        foreach ([
+            DefinitionProvider::class,
+            DefinitionCreateProcessor::class,
+            DefinitionUpdateProcessor::class,
+            DefinitionDeleteProcessor::class,
+        ] as $apiService) {
+            $container->autowire($apiService)
+                ->setAutoconfigured(true)
+                ->setPublic(true);
+        }
 
         // Reflection. The contract lives in coolms/field and the reader
         // implements it here, so the alias is what lets a consumer depend on
