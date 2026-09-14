@@ -27,7 +27,7 @@ final class FakeActor implements CoolmsUserInterface, SymfonyUserInterface
 {
     public Uuid $id;
     public Uuid $primaryGroupId;
-    public bool $isRoot = false;
+    public bool $isAdmin = false;
     public bool $isSystem = false;
 
     /** @var list<string> */
