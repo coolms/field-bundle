@@ -9,6 +9,13 @@ major number means here.
 Every entry in this file was written in the same commit as the change it
 describes. Nothing here is reconstructed.
 
+## Unreleased
+
+### Added
+
+Tests the application had been carrying for this package since the code
+moved here: `FieldMetadataRegistryTest`. Nothing under `src/` changes.
+
 ## 2.0.0-alpha1 - 2026-09-10
 
 **A pre-release. It carries no compatibility promise**, which is the honest
