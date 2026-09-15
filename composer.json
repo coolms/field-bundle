@@ -15,6 +15,10 @@
             "name": "Dmitry Popov"
         }
     ],
+    "support": {
+        "issues": "https://github.com/coolms/field-bundle/issues",
+        "source": "https://github.com/coolms/field-bundle"
+    },
     "require": {
         "php": "^8.5",
         "api-platform/core": "^4.1",
