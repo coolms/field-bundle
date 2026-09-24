@@ -21,14 +21,19 @@ use Throwable;
  * can fire syncField and provision v_* generated columns for managed-dynamic entities.
  *
  * Source-of-truth for any row carrying options['system'] = true is the YAML config;
- * the warmer recreates and re-applies these rows on every warmup, and DELETES the
- * ones the YAML no longer declares. UI-created rows (no system marker) are NEVER
- * touched.
+ * the warmer recreates and re-applies these rows on every warmup. UI-created rows
+ * (no system marker) are NEVER touched.
+ *
+ * !! IT NEVER DELETES (2026-09-24). It used to delete the marked rows no YAML
+ * declares any more, on every warm-up -- every rebuild, dozens a day in dev --
+ * where nothing that walks the console registry could see it. That reconciliation
+ * is {@see \CoolMS\Field\Bundle\Maintenance\UndeclaredDefinitionPruner} now,
+ * run by `coolms:field:prune-undeclared`: a dry run unless --execute.
  *
  * Lifecycle invariants for the future override flow:
  *   - First warmup creates the row with options['system'] = true; the listener
  *     fires syncField and provisions the v_* generated column.
- *   - Removing the YAML deletes the row on the next warmup ({@see pruneUndeclared()}).
+ *   - Removing the YAML leaves the row; `coolms:field:prune-undeclared` deletes it.
  *   - When a UI override flow later edits the same (entity_alias, name) and clears
  *     options['system'], subsequent warmups treat the row as user-owned and skip it --
  *     for the upsert and the prune alike.
@@ -85,9 +90,8 @@ final class FieldDefinitionSyncWarmer implements CacheWarmerInterface
     private function syncAlias(string $alias): void
     {
         $config = $this->configProvider->getConfig($alias) ?? [];
-        // Load-bearing for the prune below, not just an upsert shortcut: an empty
-        // config cannot be told apart from a missing module directory, so an alias
-        // that declares nothing is skipped whole rather than emptied.
+        // An empty config cannot be told apart from a missing module directory, so
+        // an alias that declares nothing is skipped whole.
         if ([] === $config) {
             return;
         }
@@ -120,72 +124,6 @@ final class FieldDefinitionSyncWarmer implements CacheWarmerInterface
             $this->upsert($alias, $fieldName, $data, $fd);
         }
 
-        $this->pruneUndeclared($alias, $config, $existing, $native);
-    }
-
-    /**
-     * Deletes the rows this warmer owns whose YAML declaration is gone.
-     *
-     * Without this a `system: true` row outlives its own declaration forever: the
-     * upsert loop above iterates $config, so a name absent from $config is never
-     * reached, never re-saved, and never removed. `vfs_node.publiclyAccessible` was
-     * that row -- its YAML went away with `Version20260521000002` (the flag is
-     * `Node.modeInt & 0o004`, and the Document/Word code reads it from there, never
-     * from extras) and the row stayed. It cost nothing while it sat inert, then
-     * `coolms:dynamic-entity:schema:sync` -- which iterates DEFINITION ROWS, not YAML --
-     * built `coolms_vfs_nodes.v_publicly_accessible` from it, a generated column over
-     * an extras key that the same migration had already emptied from every row.
-     *
-     * Three deliberate limits:
-     *
-     * 1. An alias whose $config is entirely empty never gets here -- syncAlias()
-     *    returns first. That guard is load-bearing, not incidental: an empty config
-     *    means "this alias declares nothing on disk", which cannot be told apart from
-     *    "the module directory is missing". Deleting on that reading would wipe six
-     *    live `page_variant` rows, whose YAML directory does not exist. So the prune
-     *    only ever runs for an alias that still declares SOMETHING, and removing a
-     *    module's last field for an alias leaves its rows behind. Narrow on purpose.
-     * 2. Native names are spared. The upsert loop refuses to CREATE a row for a
-     *    Doctrine-mapped column (the v_* column would read extras and always be
-     *    NULL); the prune is the same rule read backwards. `vfs_node.description` is
-     *    one such row, predating that guard -- a real orphan, but of a different kind,
-     *    and deleting it would strip a native column's field from the admin schema.
-     * 3. `locked` is not consulted. It guards the API delete path against an
-     *    operator; it is authored by the same YAML that just disappeared, so it
-     *    cannot outrank it here.
-     *
-     * The `system` check is what protects operator intent, and it protects exactly
-     * as much as it does on the upsert side -- today `DefinitionUpdateProcessor` does
-     * not clear the marker, so a UI edit to a system field is already overwritten by
-     * the next warmup. This adds no new exposure: a row the warmer would stomp is a
-     * row the warmer owns. When the override flow lands and starts clearing `system`,
-     * this method inherits the protection with no change.
-     *
-     * The v_* column is NOT dropped with the row. Runtime-dynamic aliases all share
-     * `coolms_dynamic_records`, so two aliases can map onto the same v_* column and a
-     * drop here would break the other one; the API delete path leaves the column for
-     * the same reason. Reclaiming a column stays an explicit migration.
-     *
-     * @param array<string, array<string, mixed>> $config
-     * @param array<string, Definition>           $existing
-     * @param array<string, true>                 $native
-     */
-    private function pruneUndeclared(string $alias, array $config, array $existing, array $native): void
-    {
-        foreach ($existing as $fieldName => $fd) {
-            if (isset($config[$fieldName]) || isset($native[$fieldName])) {
-                continue;
-            }
-            if (true !== ($fd->options['system'] ?? false)) {
-                continue;
-            }
-
-            $this->repository->delete($fd);
-            $this->logger->info(
-                'FieldDefinitionSyncWarmer: deleted a system field definition no YAML declares any more.',
-                ['alias' => $alias, 'field' => $fieldName],
-            );
-        }
     }
 
     /**
