@@ -123,7 +123,6 @@ final class FieldDefinitionSyncWarmer implements CacheWarmerInterface
             }
             $this->upsert($alias, $fieldName, $data, $fd);
         }
-
     }
 
     /**
