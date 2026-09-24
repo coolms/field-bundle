@@ -343,6 +343,17 @@ final class DefinitionResource
         // Build effective options: start from provided bag or fall back to entity's current options.
         $opts = $this->options ?? $fd->options;
 
+        // `system` is the sync warmer's ownership marker, and the server's alone to
+        // write. A row carrying it is re-applied from YAML on every warm-up and
+        // DELETED once no YAML declares it, so a client that could set it could
+        // schedule a field's deletion for the next deploy, and one that could clear
+        // it could take a declared field out of its YAML's hands. Whatever the body
+        // says, the row keeps the marker it had; a new row has none.
+        unset($opts['system']);
+        if (true === ($fd->options['system'] ?? false)) {
+            $opts['system'] = true;
+        }
+
         // Label (stored in options['label'])
         if ('' !== $this->label) {
             $opts['label'] = $this->label;
