@@ -21,6 +21,13 @@ describes. Nothing here is reconstructed.
 Tests the application had been carrying for this package since the code
 moved here: `FieldMetadataRegistryTest`. Nothing under `src/` changes.
 
+### Changed
+
+- The API document describes `ConstraintMetadata` and `FormTypeOption` by
+  what they are, not by which screen reads them or which framework supplies
+  them: an explicit `description` on each resource. The notes moved into
+  code comments.
+
 ## 2.0.0-alpha1 - 2026-09-10
 
 **A pre-release. It carries no compatibility promise**, which is the honest
