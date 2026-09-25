@@ -11,6 +11,18 @@ describes. Nothing here is reconstructed.
 
 ## Unreleased
 
+### Security
+
+- `options.system` is no longer client-writable through the field-definition
+  API. It is `FieldDefinitionSyncWarmer`'s ownership marker: a row carrying it
+  is re-applied from YAML on every warm-up and **deleted** once no YAML declares
+  it. `DefinitionResource::applyTo()` copied the request's `options` bag onto
+  the row whole, so a create or an update could set the marker -- scheduling
+  that field's deletion for the next `cache:warmup` -- or clear it on a
+  YAML-declared field and take the field out of its YAML's hands. The row now
+  keeps the marker it had, whatever the body says, and a new row has none. The
+  rest of the bag is written as before.
+
 ### Added
 
 - Declares `support` -- `issues` and `source` -- so a page imported from this
