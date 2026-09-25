@@ -10,11 +10,14 @@ use CoolMS\Field\Bundle\ApiPlatform\Resource\Provider\ConstraintMetadataCollecti
 use CoolMS\Field\Bundle\Validation\ConstraintParameterDto;
 
 /**
- * Exposes registered Symfony Validator constraint metadata.
- * Used by the Schema Editor to populate the "Add Constraint" dropdown.
+ * A validation constraint a field can carry: its name, its label and the
+ * parameters it takes.
  */
+// The names are the Symfony Validator constraints registered in the
+// application; the admin's schema editor lists them when a constraint is added.
 #[ApiResource(
     shortName: 'ConstraintMetadata',
+    description: 'A validation constraint a field can carry: its name, its label and the parameters it takes.',
     operations: [
         new GetCollection(
             uriTemplate: '/dynamic-entity/constraints',
