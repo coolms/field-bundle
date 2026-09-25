@@ -2,14 +2,11 @@
 
 declare(strict_types=1);
 
-namespace CoolMS\Field\Bundle\Tests\CacheWarmer;
+namespace CoolMS\Field\Bundle\Tests\Maintenance;
 
-use CoolMS\Core\Service\DataFormat;
-use CoolMS\Entity\Factory\EntityFactoryFactoryInterface;
-use CoolMS\Entity\Factory\EntityFactoryInterface;
 use CoolMS\Entity\Registry\EntityAliasRegistry;
-use CoolMS\Field\Bundle\CacheWarmer\FieldDefinitionSyncWarmer;
 use CoolMS\Field\Bundle\Config\DirectoryFieldConfigProvider;
+use CoolMS\Field\Bundle\Maintenance\UndeclaredDefinitionPruner;
 use CoolMS\Field\Bundle\Tests\Fixture\AliasedEntity;
 use CoolMS\Field\Doctrine\EntityFieldNamesResolverInterface;
 use CoolMS\Field\Entity\Definition;
@@ -22,9 +19,8 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
 /**
- * The warmer refreshes the rows it owns and, since 2026-09-24, never deletes one:
- * the deletion side of its ownership contract (#1981) is
- * UndeclaredDefinitionPrunerTest's, run by an explicit command.
+ * Covers the deletion side of the warmer's ownership contract (#1981) -- run by
+ * `coolms:field:prune-undeclared` since 2026-09-24, never by a warm-up.
  *
  * The upsert side has always had one: a `system: true` row is rebuilt from YAML on
  * every warmup and a user-owned row is left alone. The delete side had none, so a
@@ -38,7 +34,7 @@ use RecursiveIteratorIterator;
  * config array would let the prune agree with a rule the loader does not actually
  * apply. The YAML files below are what a module ships.
  */
-final class FieldDefinitionSyncWarmerTest extends TestCase
+final class UndeclaredDefinitionPrunerTest extends TestCase
 {
     private const string ALIAS = 'vfs_node';
 
@@ -49,30 +45,89 @@ final class FieldDefinitionSyncWarmerTest extends TestCase
     private array $nativeFields = [];
 
     /**
-     * A marked row no YAML declares any more stays through a warm-up: deleting it
-     * is `coolms:field:prune-undeclared`'s, an explicit step (2026-09-24).
+     * The reported defect: YAML gone, `system: true`, so the row is the warmer's
+     * and nothing else will ever clean it up.
      */
-    public function testAWarmUpNeverDeletes(): void
+    public function testDeletesSystemRowTheYamlNoLongerDeclares(): void
     {
         $orphan = $this->definition('publiclyAccessible', system: true);
         $this->declareField('title');
         $this->givenExisting($this->definition('title', system: true), $orphan);
 
-        $this->repository->expects(self::never())->method('delete');
+        $this->repository->expects(self::once())->method('delete')->with($orphan);
 
-        $this->warmer()->warmUp('/tmp/cache');
+        $this->prune();
     }
 
-    /** A declared field is refreshed, never removed. */
-    public function testKeepsSystemRowStillDeclaredByYaml(): void
+    /**
+     * A row with no `system` marker was authored through the UI. The warmer does not
+     * own it and must not delete it just because no YAML mentions the name -- that is
+     * the normal state of every UI-created field.
+     */
+    public function testKeepsUserOwnedRowTheYamlDoesNotDeclare(): void
     {
         $this->declareField('title');
-        $this->givenExisting($this->definition('title', system: true));
+        $this->givenExisting(
+            $this->definition('title', system: true),
+            $this->definition('operatorField', system: false),
+        );
 
         $this->repository->expects(self::never())->method('delete');
-        $this->repository->expects(self::once())->method('save');
 
-        $this->warmer()->warmUp('/tmp/cache');
+        $this->prune();
+    }
+
+    /**
+     * The upsert loop refuses to CREATE a row for a Doctrine-mapped column, because
+     * its v_* column would read `extras` and always be NULL. The prune is that rule
+     * read backwards: `vfs_node.description` is such a row, and deleting it would
+     * strip a native column's field from the admin schema.
+     */
+    public function testKeepsSystemRowWhoseNameIsANativeColumn(): void
+    {
+        $this->declareField('title');
+        $this->nativeFields = ['description' => true];
+        $this->givenExisting(
+            $this->definition('title', system: true),
+            $this->definition('description', system: true),
+        );
+
+        $this->repository->expects(self::never())->method('delete');
+
+        $this->prune();
+    }
+
+    /**
+     * An empty config cannot be told apart from a module directory that is missing,
+     * so the alias is skipped whole. Without this, six live `page_variant` rows --
+     * whose YAML directory does not exist -- would be deleted on the next warmup.
+     */
+    public function testPrunesNothingForAnAliasThatDeclaresNoFieldsAtAll(): void
+    {
+        $this->givenExisting($this->definition('contentHash', system: true));
+
+        $this->repository->expects(self::never())->method('delete');
+
+        $this->prune();
+    }
+
+    /**
+     * One module dropping a field does not take another module's field for the same
+     * alias with it: the provider merges every `config/modules/*` contribution, so
+     * "declared" is the union.
+     */
+    public function testKeepsSystemRowDeclaredByADifferentModuleForTheSameAlias(): void
+    {
+        $this->declareField('title', module: 'content');
+        $this->declareField('templateId', module: 'document');
+        $this->givenExisting(
+            $this->definition('title', system: true),
+            $this->definition('templateId', system: true),
+        );
+
+        $this->repository->expects(self::never())->method('delete');
+
+        $this->prune();
     }
 
     protected function setUp(): void
@@ -128,26 +183,18 @@ final class FieldDefinitionSyncWarmerTest extends TestCase
         return $fd;
     }
 
-    private function warmer(): FieldDefinitionSyncWarmer
+    private function prune(): void
     {
         $resolver = $this->createStub(EntityFieldNamesResolverInterface::class);
         $resolver->method('resolve')->willReturnCallback(fn (): array => $this->nativeFields);
 
-        $factory = $this->createStub(EntityFactoryInterface::class);
-        $factory->method('create')->willReturnCallback(
-            /** @param array<string, mixed>|string $data */
-            fn (array|string $data, ?DataFormat $format = null, array $context = []): Definition => $this->definition(is_array($data) ? (string) $data['name'] : '', system: false),
-        );
-        $factoryFactory = $this->createStub(EntityFactoryFactoryInterface::class);
-        $factoryFactory->method('get')->willReturn($factory);
-
-        return new FieldDefinitionSyncWarmer(
+        $pruner = new UndeclaredDefinitionPruner(
             new EntityAliasRegistry([AliasedEntity::class => self::ALIAS]),
             new DirectoryFieldConfigProvider($this->projectDir),
             $this->repository,
-            $factoryFactory,
             $resolver,
             new NullLogger(),
         );
+        $pruner->prune($pruner->plan()['undeclared']);
     }
 }

@@ -22,10 +22,12 @@ use CoolMS\Field\Bundle\ApiPlatform\Resource\Provider\FormTypeOptionCollectionPr
 use CoolMS\Field\Bundle\CacheWarmer\FieldDefinitionSyncWarmer;
 use CoolMS\Field\Bundle\Command\CreateDefinitionCommand;
 use CoolMS\Field\Bundle\Command\ListDefinitionsCommand;
+use CoolMS\Field\Bundle\Command\PruneUndeclaredDefinitionsCommand;
 use CoolMS\Field\Bundle\Config\DirectoryFieldConfigProvider;
 use CoolMS\Field\Bundle\EntitySchema\FieldSchemaSource;
 use CoolMS\Field\Bundle\Form\StaticFieldMetaLoader;
 use CoolMS\Field\Bundle\FormType\BuiltinFormTypeProvider;
+use CoolMS\Field\Bundle\Maintenance\UndeclaredDefinitionPruner;
 use CoolMS\Field\Bundle\Reflection\FieldMetaReader;
 use CoolMS\Field\Bundle\Storage\DbFieldOverrideStorage;
 use CoolMS\Field\Bundle\Storage\FieldOverrideStorageRouter;
@@ -228,7 +230,12 @@ class Extension extends AbstractExtension implements PrependExtensionInterface
             ->setPublic(false)
             ->addTag('kernel.cache_warmer');
 
+        // The reconciliation the warmer no longer runs: an explicit, destructive step.
+        $container->autowire(UndeclaredDefinitionPruner::class)->setPublic(false);
+
         // Commands
+        $container->autowire(PruneUndeclaredDefinitionsCommand::class)
+            ->addTag('console.command');
         $container->autowire(CreateDefinitionCommand::class)
             ->addTag('console.command');
         $container->autowire(ListDefinitionsCommand::class)

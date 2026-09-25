@@ -11,6 +11,24 @@ describes. Nothing here is reconstructed.
 
 ## Unreleased
 
+### Changed
+
+- **A cache warm-up no longer deletes field definitions.**
+  `FieldDefinitionSyncWarmer` used to delete, on every warm-up, the rows it had
+  marked (`options.system`) that no YAML declares any more. Warm-up runs on
+  every rebuild, and a warmer is seen by nothing that holds destructive
+  commands to their rule. The warmer now only refreshes the rows it owns; a row
+  whose YAML is gone stays until `coolms:field:prune-undeclared` deletes it.
+
+### Added
+
+- `coolms:field:prune-undeclared` and `Maintenance\UndeclaredDefinitionPruner`:
+  the deletion the warmer ran, under the destructive-command rule -- a dry run
+  unless `--execute`, a refusal under `--no-interaction` without `--force`, and
+  "N of M field definition(s)" in every report. The rule is the warmer's,
+  unchanged: only marked rows, never for an alias that declares nothing, never
+  a native column's name.
+
 ### Security
 
 - `options.system` is no longer client-writable through the field-definition
