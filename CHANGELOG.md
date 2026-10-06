@@ -9,7 +9,7 @@ major number means here.
 Every entry in this file was written in the same commit as the change it
 describes. Nothing here is reconstructed.
 
-## Unreleased
+## 2.0.0-alpha2 - 2026-10-07
 
 ### Changed
 
