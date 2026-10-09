@@ -3,8 +3,8 @@
 All notable changes to `coolms/field-bundle` are recorded here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
-Versioning is described in `CONTRIBUTING.md` -- read it before assuming what a
-major number means here.
+Versioning is described in the [CoolMS contributing guide](https://github.com/coolms/.github/blob/develop/CONTRIBUTING.md)
+-- read it before assuming what a major number means here.
 
 Every entry in this file was written in the same commit as the change it
 describes. Nothing here is reconstructed.
