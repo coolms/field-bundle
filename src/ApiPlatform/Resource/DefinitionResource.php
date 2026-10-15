@@ -344,11 +344,12 @@ final class DefinitionResource
         $opts = $this->options ?? $fd->options;
 
         // `system` is the sync warmer's ownership marker, and the server's alone to
-        // write. A row carrying it is re-applied from YAML on every warm-up and
-        // DELETED once no YAML declares it, so a client that could set it could
-        // schedule a field's deletion for the next deploy, and one that could clear
-        // it could take a declared field out of its YAML's hands. Whatever the body
-        // says, the row keeps the marker it had; a new row has none.
+        // write. A row carrying it is re-applied from YAML on every warm-up, and
+        // `coolms:field:prune-undeclared` deletes it once its YAML no longer declares
+        // it (the warm-up itself never deletes), so a client that could set it could
+        // queue a field for that deletion, and one that could clear it could take a
+        // declared field out of its YAML's hands. Whatever the body says, the row
+        // keeps the marker it had; a new row has none.
         unset($opts['system']);
         if (true === ($fd->options['system'] ?? false)) {
             $opts['system'] = true;

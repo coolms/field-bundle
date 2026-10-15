@@ -9,6 +9,15 @@ Versioning is described in the [CoolMS contributing guide](https://github.com/co
 Every entry in this file was written in the same commit as the change it
 describes. Nothing here is reconstructed.
 
+## Unreleased
+
+### Added
+
+- README.md: what the extension registers, that the API resources need the
+  application to register this package's classes as autoconfigured services, how
+  fields declared in configuration are imported and pruned, where an override is
+  written, and what it requires.
+
 ## 2.0.0-alpha2 - 2026-10-07
 
 ### Changed
