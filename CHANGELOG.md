@@ -13,8 +13,10 @@ describes. Nothing here is reconstructed.
 
 ### Added
 
-- README.md: what the bundle wires, how fields declared in configuration are
-  imported and pruned, where an override is written, and what it requires.
+- README.md: what the extension registers, that the API resources need the
+  application to register this package's classes as autoconfigured services, how
+  fields declared in configuration are imported and pruned, where an override is
+  written, and what it requires.
 
 ## 2.0.0-alpha2 - 2026-10-07
 
