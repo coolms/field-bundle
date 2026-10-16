@@ -28,34 +28,15 @@ CoolMS\Field\Bundle\FieldBundle::class => ['all' => true],
   `coolms:field:prune-undeclared`
 - the cache warmer that imports the fields declared in configuration
 - the built-in form types and the override storage router
-- the API Platform state provider and the create, update and delete processors of
-  the definition resource
+- the API surface: the resources `/field/definitions` (with `/{id}`, `/reorder`
+  and the delete by alias), `/field/form-types` and `/dynamic-entity/constraints`,
+  with every state provider and processor they name, the label writer they use
+  and the constraint registry
 
-## The API resources need a service scan, for now
-
-The resources -- `/field/definitions` (with `/{id}`, `/reorder` and the delete
-by alias), `/field/form-types` and `/dynamic-entity/constraints` -- are **not**
-registered by the extension. Since API Platform 4.1 a class carrying
-`#[ApiResource]` is discovered by being an autoconfigured service, so with the
-bundle alone these routes do not exist, and nothing reports it. Neither do the
-constraint-metadata provider, the reorder and delete-by-alias processors, or the
-constraint registry.
-
-Until the extension registers them, register the package's classes yourself:
-
-```yaml
-# config/services.yaml
-services:
-    _defaults:
-        autowire: true
-        autoconfigure: true
-
-    CoolMS\Field\Bundle\:
-        resource: '%kernel.project_dir%/vendor/coolms/field-bundle/src/'
-        exclude:
-            - '%kernel.project_dir%/vendor/coolms/field-bundle/src/FieldBundle.php'
-            - '%kernel.project_dir%/vendor/coolms/field-bundle/src/DependencyInjection/'
-```
+An application that installs the bundle serves those routes without registering
+any of this package's classes itself. Since API Platform 4.1 a class carrying
+`#[ApiResource]` is found by being an autoconfigured service, so the extension
+registers each resource as one.
 
 ## Fields declared in configuration
 

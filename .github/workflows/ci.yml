@@ -111,6 +111,7 @@ jobs:
           WITH="$WITH --with coolms/core-bundle:2.0.x-dev"
           WITH="$WITH --with coolms/core-doctrine:2.0.x-dev"
           WITH="$WITH --with coolms/entity:2.0.x-dev"
+          WITH="$WITH --with coolms/entity-application:2.0.x-dev"
           WITH="$WITH --with coolms/entity-bundle:2.0.x-dev"
           WITH="$WITH --with coolms/entity-doctrine:2.0.x-dev"
           WITH="$WITH --with coolms/field:2.0.x-dev"
