@@ -21,6 +21,7 @@
     },
     "require": {
         "php": "^8.5",
+        "ext-simplexml": "*",
         "api-platform/core": "^4.1",
         "coolms/core": "^2.0",
         "coolms/core-bundle": "^2.0",

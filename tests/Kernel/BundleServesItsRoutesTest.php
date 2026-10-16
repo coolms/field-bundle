@@ -11,6 +11,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 
 use function dirname;
 use function restore_exception_handler;
@@ -83,7 +84,14 @@ final class BundleServesItsRoutesTest extends TestCase
         $this->handlerBefore = set_exception_handler(null);
         restore_exception_handler();
         $this->kernel = new BundleOnlyKernel('test', false);
-        $this->kernel->boot();
+        try {
+            $this->kernel->boot();
+        } catch (Throwable $e) {
+            // A boot that fails has installed its handler all the same.
+            $this->restoreExceptionHandler();
+
+            throw $e;
+        }
 
         $em = $this->entityManager();
         new SchemaTool($em)->createSchema([$em->getClassMetadata(Definition::class)]);
@@ -92,6 +100,11 @@ final class BundleServesItsRoutesTest extends TestCase
     protected function tearDown(): void
     {
         $this->kernel->shutdown();
+        $this->restoreExceptionHandler();
+    }
+
+    private function restoreExceptionHandler(): void
+    {
         for ($guard = 0; $guard < 10; ++$guard) {
             $current = set_exception_handler(null);
             restore_exception_handler();

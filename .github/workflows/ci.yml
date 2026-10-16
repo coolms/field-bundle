@@ -43,8 +43,10 @@ jobs:
           # lets DBAL build a platform without a server.
           # zip arrives via coolms/core-application, whose bundle archiver
           # requires ext-zip. A transitive platform requirement is still a
-          # requirement: composer refuses the install without it.
-          extensions: none, ctype, dom, filter, json, libxml, mbstring, tokenizer, xml, xmlwriter, curl, phar, pdo, pdo_sqlite, zip
+          # requirement: composer refuses the install without it. simplexml is
+          # this package's own: Doctrine reads the entity mapping it registers
+          # as XML (declared in composer.json, so the two cannot drift).
+          extensions: none, ctype, dom, filter, json, libxml, mbstring, tokenizer, xml, xmlwriter, curl, phar, pdo, pdo_sqlite, simplexml, zip
 
       - name: Validate composer.json
         run: composer validate --strict

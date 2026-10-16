@@ -26,6 +26,8 @@ describes. Nothing here is reconstructed.
   form-type and widget providers are.
 - A test kernel with only the bundles this package requires, and nothing of the
   application's own, serves each route.
+- `ext-simplexml` is required: Doctrine reads the entity mapping this bundle
+  registers as XML, and the extension it needs was declared by nothing.
 
 ### Added
 
