@@ -11,12 +11,28 @@ describes. Nothing here is reconstructed.
 
 ## Unreleased
 
+### Fixed
+
+- The extension registers the API surface itself: the three resources, every
+  state provider and processor they name (the reorder and delete-by-alias
+  processors and the constraint-metadata provider among them, which nothing
+  registered), the label writer the processors use and the constraint registry.
+  An application that installs the bundle serves `/field/definitions`,
+  `/field/form-types` and `/dynamic-entity/constraints` without a service scan of
+  its own; the README section that asked for one is gone.
+- The built-in form-type provider carries its tag by name. It was tagged only by
+  an application's scan, so without one the form-type list came back empty.
+- Constraint-metadata providers are collected by autoconfiguration, as the
+  form-type and widget providers are.
+- A test kernel with only the bundles this package requires, and nothing of the
+  application's own, serves each route.
+- `ext-simplexml` is required: Doctrine reads the entity mapping this bundle
+  registers as XML, and the extension it needs was declared by nothing.
+
 ### Added
 
-- README.md: what the extension registers, that the API resources need the
-  application to register this package's classes as autoconfigured services, how
-  fields declared in configuration are imported and pruned, where an override is
-  written, and what it requires.
+- README.md: what the extension registers, how fields declared in configuration
+  are imported and pruned, where an override is written, and what it requires.
 
 ## 2.0.0-alpha2 - 2026-10-07
 

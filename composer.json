@@ -21,6 +21,7 @@
     },
     "require": {
         "php": "^8.5",
+        "ext-simplexml": "*",
         "api-platform/core": "^4.1",
         "coolms/core": "^2.0",
         "coolms/core-bundle": "^2.0",
@@ -44,7 +45,13 @@
     "require-dev": {
         "coolms/core-doctrine": "^2.0",
         "coolms/entity-doctrine": "^2.0",
-        "phpunit/phpunit": "^12.5"
+        "doctrine/doctrine-bundle": "^3.2",
+        "phpunit/phpunit": "^12.5",
+        "symfony/framework-bundle": "^8.0",
+        "symfony/http-client-contracts": "^3.5",
+        "symfony/translation": "^8.0",
+        "symfony/var-dumper": "^7.4|^8.0",
+        "symfony/web-link": "^7.4|^8.0"
     },
     "autoload": {
         "psr-4": {

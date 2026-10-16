@@ -14,9 +14,15 @@ use CoolMS\Entity\Contract\FieldMetadataSourceInterface;
 use CoolMS\Entity\Contract\FieldSchemaSourceInterface;
 use CoolMS\Entity\Factory\EntityFactoryFactoryInterface;
 use CoolMS\Entity\Registry\EntityAliasRegistry;
+use CoolMS\Field\Bundle\ApiPlatform\Resource\ConstraintMetadataResource;
+use CoolMS\Field\Bundle\ApiPlatform\Resource\DefinitionResource;
+use CoolMS\Field\Bundle\ApiPlatform\Resource\FormTypeOptionResource;
 use CoolMS\Field\Bundle\ApiPlatform\Resource\Processor\DefinitionCreateProcessor;
+use CoolMS\Field\Bundle\ApiPlatform\Resource\Processor\DefinitionDeleteByAliasProcessor;
 use CoolMS\Field\Bundle\ApiPlatform\Resource\Processor\DefinitionDeleteProcessor;
+use CoolMS\Field\Bundle\ApiPlatform\Resource\Processor\DefinitionReorderProcessor;
 use CoolMS\Field\Bundle\ApiPlatform\Resource\Processor\DefinitionUpdateProcessor;
+use CoolMS\Field\Bundle\ApiPlatform\Resource\Provider\ConstraintMetadataCollectionProvider;
 use CoolMS\Field\Bundle\ApiPlatform\Resource\Provider\DefinitionProvider;
 use CoolMS\Field\Bundle\ApiPlatform\Resource\Provider\FormTypeOptionCollectionProvider;
 use CoolMS\Field\Bundle\CacheWarmer\FieldDefinitionSyncWarmer;
@@ -32,6 +38,9 @@ use CoolMS\Field\Bundle\Reflection\FieldMetaReader;
 use CoolMS\Field\Bundle\Storage\DbFieldOverrideStorage;
 use CoolMS\Field\Bundle\Storage\FieldOverrideStorageRouter;
 use CoolMS\Field\Bundle\Storage\FileFieldOverrideStorage;
+use CoolMS\Field\Bundle\Translation\FieldTranslationWriter;
+use CoolMS\Field\Bundle\Validation\ConstraintMetadataProviderInterface;
+use CoolMS\Field\Bundle\Validation\ConstraintRegistry;
 use CoolMS\Field\Contract\FieldMetaReaderInterface;
 use CoolMS\Field\Contract\FieldOverrideStorageInterface;
 use CoolMS\Field\Contract\FieldWidgetRegistryInterface;
@@ -72,16 +81,17 @@ class Extension extends AbstractExtension implements PrependExtensionInterface
             ->addTag('coolms.field.form_type');
 
         // BuiltinFormTypeProvider -- provides the standard Symfony core form types.
-        // Infrastructure/ is auto-scanned by services.yaml; tag is applied via autoconfiguration above.
-        $container->autowire(BuiltinFormTypeProvider::class)->setPublic(false);
+        // Tagged here, by name: autoconfiguration above tags only definitions marked
+        // autoconfigured, and this one is not. The tag used to arrive from the host
+        // application's own scan of this package, which a consumer does not have.
+        $container->autowire(BuiltinFormTypeProvider::class)
+            ->addTag('coolms.field.form_type')
+            ->setPublic(false);
 
         // FormTypeRegistry -- lives in Domain/Registry/ which is excluded from auto-wiring.
         $container->register(FormTypeRegistry::class)
             ->setArgument('$providers', new TaggedIteratorArgument('coolms.field.form_type'))
             ->setPublic(false);
-
-        // FormTypeOptionCollectionProvider -- must be public for API Platform state resolution.
-        $container->autowire(FormTypeOptionCollectionProvider::class)->setPublic(true);
 
         // FieldWidgetProvider implementations (a module => admin field-widget for a
         // field type) are auto-tagged; a provider only exists while its module is
@@ -102,23 +112,50 @@ class Extension extends AbstractExtension implements PrependExtensionInterface
         $container->setAlias(DefinitionRepositoryInterface::class, DefinitionRepository::class)
             ->setPublic(true);
 
-        // ApiPlatform. AUTOCONFIGURED, or API Platform never sees them: a
-        // provider is found through the `api_platform.state_provider` tag, which
-        // autoconfiguration attaches to autoconfigured definitions only. In the
-        // host application these four were tagged anyway, by its own prototype
-        // scan of this package -- a clean consumer has no such scan, and
-        // coolms/taxonomy-bundle, registered the same way without the scan,
-        // answered 404 on every request (measured 2026-09-14).
+        // ApiPlatform. Everything here AUTOCONFIGURED, or API Platform never sees
+        // it. Since 4.1 a class carrying #[ApiResource] is found by being an
+        // autoconfigured service: autoconfiguration marks the definition abstract
+        // and tags it `api_platform.resource`, and nothing reports a resource no
+        // one registered -- its routes are simply absent. A provider or processor
+        // is found the same way, through the `api_platform.state_provider` and
+        // `api_platform.state_processor` tags. In the host application all of
+        // these were tagged anyway, by its own prototype scan of this package; a
+        // clean consumer has no such scan, and coolms/taxonomy-bundle, registered
+        // without it, answered 404 on every request (measured 2026-09-14).
+        foreach ([
+            ConstraintMetadataResource::class,
+            DefinitionResource::class,
+            FormTypeOptionResource::class,
+        ] as $resource) {
+            $container->register($resource)
+                ->setAutoconfigured(true);
+        }
+
         foreach ([
             DefinitionProvider::class,
+            FormTypeOptionCollectionProvider::class,
+            ConstraintMetadataCollectionProvider::class,
             DefinitionCreateProcessor::class,
             DefinitionUpdateProcessor::class,
             DefinitionDeleteProcessor::class,
+            DefinitionReorderProcessor::class,
+            DefinitionDeleteByAliasProcessor::class,
         ] as $apiService) {
             $container->autowire($apiService)
                 ->setAutoconfigured(true)
                 ->setPublic(true);
         }
+
+        // What the processors write labels through. The catalogue writer it
+        // takes is core's port; core-bundle supplies a null writer when no
+        // module implements it, so the bundle stands without one.
+        $container->autowire(FieldTranslationWriter::class)->setPublic(false);
+
+        // Constraint metadata: providers implement the port and are collected by
+        // the registry through this tag, as the form-type and widget providers are.
+        $container->registerForAutoconfiguration(ConstraintMetadataProviderInterface::class)
+            ->addTag('coolms.field.constraint_provider');
+        $container->autowire(ConstraintRegistry::class)->setPublic(false);
 
         // Reflection. The contract lives in coolms/field and the reader
         // implements it here, so the alias is what lets a consumer depend on
