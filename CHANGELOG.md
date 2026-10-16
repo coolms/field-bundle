@@ -9,7 +9,17 @@ Versioning is described in the [CoolMS contributing guide](https://github.com/co
 Every entry in this file was written in the same commit as the change it
 describes. Nothing here is reconstructed.
 
-## Unreleased
+## 2.0.0-alpha3 - 2026-10-17
+
+### Changed: every coolms requirement names the release this one is built against
+
+coolms/core 2.0.0-alpha4, coolms/core-application 2.0.0-alpha3,
+coolms/core-bundle 2.0.0-alpha7, coolms/entity 2.0.0-alpha5,
+coolms/entity-bundle 2.0.0-alpha6, coolms/field 2.0.0-alpha2 and
+coolms/field-doctrine 2.0.0-alpha2, or later. At `^2.0` the lowest versions
+still used their earlier namespaces, and the bundles before these releases do
+not register what this one's surface asks for, so an older sibling installed
+beside it would leave classes undefined or the container uncompiled.
 
 ### Fixed
 
