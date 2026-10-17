@@ -9,11 +9,13 @@ use ApiPlatform\Metadata\GetCollection;
 use CoolMS\Field\Bundle\ApiPlatform\Resource\Provider\FormTypeOptionCollectionProvider;
 
 /**
- * Exposes available Symfony form type options for the Schema Editor.
- * Used to populate the "Form Type" select in the static-override dialog.
+ * A form widget a field can be rendered with: its value and its label.
  */
+// The values are Symfony form type classes; the admin's schema editor offers
+// them when a field's widget is overridden.
 #[ApiResource(
     shortName: 'FormTypeOption',
+    description: 'A form widget a field can be rendered with: its value and its label.',
     operations: [
         new GetCollection(
             uriTemplate: '/field/form-types',
